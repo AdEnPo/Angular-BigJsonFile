@@ -1,0 +1,21 @@
+<nav class="navbar navbar-dark bg-dark justify-content-between">
+    <a class="navbar-brand">Navbar</a>
+    <div class="form-inline">
+      <input [(ngModel)]="searches" name="searches" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
+    </div>
+  </nav>
+  
+  <div class="container">     
+    <div class="row">
+        <div class="col-md-4 pt-5" *ngFor="let data of dataSet | filter:searches">
+        <div class="card" >
+            <a href="{{data.photo}}" style=" text-align: center;"><img class="card-img-top" src="{{data.photo}}" alt="Card image cap" style="width: auto;"></a>
+            <div class="card-body">
+                <h5 class="card-title">{{data.id}}  {{data.author}}</h5>
+                <p class="card-text">{{data.text}}</p>
+                <div (click)="saveToLocal(data.id)" class="btn btn-success float-right"><3</div>
+            </div>
+        </div>
+        </div>
+    </div>
+  </div>
