@@ -28,8 +28,7 @@ export class FilterPipe implements PipeTransform {
       else if (post.id == arg) {
         //To search from id  
         resultPost.push(post);          
-      }
-      
+      } 
     }
     return resultPost;
   }

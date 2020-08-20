@@ -4,18 +4,28 @@
       <input [(ngModel)]="searches" name="searches" class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" >
     </div>
   </nav>
-  
-  <div class="container">     
-    <div class="row">
+  <p>P.S.: To see liked photos write'<3' to Search</p>
+  <div class="container">
+    
+      <div class="row">
+        <!--<cdk-virtual-scroll-view-point itemSize="50"></cdk-virtual-scroll-view-point>-->
         <div class="col-md-4 pt-5" *ngFor="let data of dataSet | filter:searches">
-        <div class="card" >
-            <a href="{{data.photo}}" style=" text-align: center;"><img class="card-img-top" src="{{data.photo}}" alt="Card image cap" style="width: auto;"></a>
-            <div class="card-body">
-                <h5 class="card-title">{{data.id}}  {{data.author}}</h5>
-                <p class="card-text">{{data.text}}</p>
-                <div (click)="saveToLocal(data.id)" class="btn btn-success float-right"><3</div>
-            </div>
+          <div class="card" >
+              <a href="{{data.photo}}" style=" text-align: center;"><img class="card-img-top" src="{{data.photo}}" alt="Card image cap" style="width: auto;"></a>
+              <div class="card-body">
+                  <h5 class="card-title">{{data.id}}  {{data.author}}</h5>
+                  <p class="card-text">{{data.text}}</p>
+                  <div id="{{data.id}}"(click)="saveToLocal(data.id)" class="btn btn-success float-right">Like</div>
+              </div>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
+      <div
+      infiniteScroll
+      [infiniteScrollDistance]="2"
+      [infiniteScrollThrottle]="1000"
+      (scrolled)="onScroll()">
+      </div>
+
+
   </div>

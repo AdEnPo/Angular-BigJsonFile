@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy,Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
 import imageData from '../../models/elements.json';
+
 
 @Component({
   selector: 'app-posts',
@@ -8,12 +9,19 @@ import imageData from '../../models/elements.json';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  dataSet:any;
+  allDataSet : any;
+  dataSet: any;
   searches: string="";
+  itemCount = 50;
 
-  constructor(private http: DataService) { }
+  batch = 2;
+  lastKey = '';
+  finished = false;
+
+  constructor(private http: DataService ) { }
   ngOnInit() {
-    this.dataSet = this.http.datas;
+    this.allDataSet = this.http.datas;
+    this.dataSet = this.allDataSet.slice(0,this.itemCount);
     this.http.getLikedItems();
     this.getFirst();
   }
@@ -22,17 +30,37 @@ export class PostsComponent implements OnInit {
       const btn = document.querySelectorAll('.btn-success');
 
       for(const items of this.http.getLikedItems()){
-        console.log(btn[items]);
-        btn[items].classList.add('like');
+        btn[items-1].classList.remove ("btn-success");
+        btn[items-1].classList.add ("btn-danger");
       }
     },1);
   }
 
   saveToLocal(id){
-    const btn = document.querySelectorAll('.btn-success');
-    btn[id-1].classList.toggle("like");
-    this.http.saveLikesToLocal(id);
+    const btn = document.getElementById(''+id);
+
+      if(btn.classList.contains('btn-success')){
+        btn.classList.remove ("btn-success");
+        btn.classList.add ("btn-danger");
+      }else{
+        btn.classList.add ("btn-success");
+        btn.classList.remove ("btn-danger");
+      }
+    
+    if(!this.http.Items.includes(id)){
+      this.http.saveLikesToLocal(id);
+    }else{
+      this.http.removeLikedItems(id);
+    }    
   }
-
-
+  onScroll(){
+    console.log('end');
+    this.loadDatas();
+  }
+  loadDatas(){
+    let newDatas = this.allDataSet.slice(this.itemCount,this.itemCount+50);
+    this.dataSet.push(newDatas);
+    this.itemCount+=50;
+    this.ngOnInit();
+  }
 }

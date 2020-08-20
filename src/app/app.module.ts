@@ -5,9 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {HttpClientModule} from '@angular/common/http';
-import {ScrollingModule} from '@angular/cdk/scrolling';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 import { PostsComponent } from './components/posts/posts.component';
-
 
 import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 import {NgxSpinnerModule} from'ngx-spinner';
@@ -23,10 +22,10 @@ import { FilterPipe } from './components/filter.pipe';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ScrollingModule,
-    InfiniteScrollModule,
+    ScrollDispatchModule,
     NgxSpinnerModule,
-    FormsModule
+    FormsModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]
