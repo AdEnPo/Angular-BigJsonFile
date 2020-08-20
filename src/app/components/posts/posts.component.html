@@ -11,10 +11,10 @@
         <!--<cdk-virtual-scroll-view-point itemSize="50"></cdk-virtual-scroll-view-point>-->
         <div class="col-md-4 pt-5" *ngFor="let data of dataSet | filter:searches">
           <div class="card" >
-              <a href="{{data.photo}}" style=" text-align: center;"><img class="card-img-top" src="{{data.photo}}" alt="Card image cap" style="width: auto;"></a>
+              <a href="{{data.url}}" style=" text-align: center;"><img class="card-img-top" src="{{data.download_url}}" alt="Card image cap"></a>
               <div class="card-body">
-                  <h5 class="card-title">{{data.id}}  {{data.author}}</h5>
-                  <p class="card-text">{{data.text}}</p>
+                  <h5 class="card-title">{{data.author}}</h5>
+                  <p class="card-text">{{text}}</p>
                   <div id="{{data.id}}"(click)="saveToLocal(data.id)" class="btn btn-success float-right">Like</div>
               </div>
           </div>

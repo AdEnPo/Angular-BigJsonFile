@@ -1,6 +1,9 @@
 import { ChangeDetectionStrategy,Component, OnInit } from '@angular/core';
 import { DataService} from '../data.service';
 import imageData from '../../models/elements.json';
+import { HttpClient } from '@angular/common/http';
+import{LoremIpsum} from 'lorem-ipsum';
+import { from } from 'rxjs';
 
 
 @Component({
@@ -9,21 +12,23 @@ import imageData from '../../models/elements.json';
   styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
-  allDataSet : any;
-  dataSet: any;
+  allDataSet : any = [];
+  dataSet: any = [];
   searches: string="";
   itemCount = 50;
-
-  batch = 2;
-  lastKey = '';
-  finished = false;
-
+  text;
+  lorem = new LoremIpsum({
+    sentencesPerParagraph:{ max:3, min:1},
+    wordsPerSentence:{ max:8, min:2 }
+  });;
   constructor(private http: DataService ) { }
   ngOnInit() {
-    this.allDataSet = this.http.datas;
-    this.dataSet = this.allDataSet.slice(0,this.itemCount);
+    this.allDataSet = this.http.allDatas;
+    this.text= this.lorem.generateSentences();
+    this.dataSet = this.allDataSet;//slice(0,this.itemCount);
     this.http.getLikedItems();
-    this.getFirst();
+    //this.getFirst();
+    this.http.getDatas();
   }
   getFirst(){
     setTimeout(()=>{
@@ -33,7 +38,7 @@ export class PostsComponent implements OnInit {
         btn[items-1].classList.remove ("btn-success");
         btn[items-1].classList.add ("btn-danger");
       }
-    },1);
+    },2000);
   }
 
   saveToLocal(id){

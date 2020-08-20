@@ -11,6 +11,8 @@ export class DataService {
   Items: any = [];
   key= 'Liked Posts';
 
+  allDatas: any= [];
+
   constructor(private http: HttpClient) {
 
   }
@@ -19,7 +21,21 @@ export class DataService {
     sessionStorage.setItem(this.key,this.Items);
     return 0;
   }
-   
+  getDatas(){
+    for (let i = 0; i <200; i++) {
+      if(i==86 || i==97 || i==105 || i== 138 || i== 148 || i== 150 ) continue;
+      let url = "https://picsum.photos/id/"+i+"/info";
+      let text="Lorem"+i;
+      this.http.get(url).subscribe(d=>{
+        this.allDatas.push(d);
+      });
+    }
+    //console.log(this.allDatas);
+  
+  }
+  addNewElement(){
+    console.log(this.allDatas.length);
+  }
   getLikedItems(){
      //isNaN ile string değil number array yapabilirsin
      if (sessionStorage.length == 0) {
@@ -40,8 +56,8 @@ export class DataService {
     this.Items.splice(index,1);
     sessionStorage.setItem(this.key,this.Items);
   }
-  /*  
-  datas: any =[{"id":1,"author":"Emylee Hurnell","photo":"https://picsum.photos/200/300","text":"risus praesent lectus vestibulum quam sapien varius ut blandit non"},
+   
+  /*datas: any =[{"id":1,"author":"Emylee Hurnell","photo":"https://picsum.photos/200/300","text":"risus praesent lectus vestibulum quam sapien varius ut blandit non"},
     {"id":2,"author":"Mozes Henzer","photo":"https://picsum.photos/200/300","text":"facilisi cras non velit nec nisi vulputate nonummy maecenas tincidunt lacus at velit vivamus vel nulla eget eros"},
     {"id":3,"author":"Kahaleel Primak","photo":"https://picsum.photos/200/300","text":"elementum ligula vehicula consequat morbi a ipsum integer a nibh in quis justo maecenas rhoncus aliquam"},
     {"id":4,"author":"Aile Sweeny","photo":"https://picsum.photos/200/300","text":"ullamcorper purus sit amet nulla quisque arcu libero rutrum ac lobortis"},
